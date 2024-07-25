@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Tasks</title>
+    <link rel="stylesheet" href="../style/index_css/showTasks.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Your Tasks</h1>
+      </header>
+      <ul id="task-list"></ul>
+      <footer>
+        <button type="button" id="Back">Back</button>
+        <button type="button" id="Download">Download PDF</button>
+      </footer>
+    </div>
+   
+    <script src="../js/indexRenderer/showTask.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  </body>
+  <script>
+      const backBtn = document.getElementById('Back')
+
+      backBtn.addEventListener('click', function () {
+      window.location.href = '../../../index.html'
+  })
+
+  </script>
+</html>

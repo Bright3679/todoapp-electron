@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="../style/auth_css/register.css" />
+  </head>
+
+  <body>
+    <div class="login-container">
+      <h2>Register</h2>
+      <form id="loginForm">
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter your username"
+          autocomplete="off"
+          required
+        />
+        <input
+          type="text"
+          id="email"
+          name="Email"
+          placeholder="Enter your Email"
+          autocomplete="off"
+          required
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          autocomplete="off"
+          required
+        />
+        <input
+          type="password"
+          id="confirmPassword"
+          name="confirmPassword"
+          placeholder="Confirm your password"
+          autocomplete="off"
+          required
+        />
+        <label>
+          <input type="checkbox" id="showPassword" /> Show Passwords
+        </label>
+        <button type="button" id="registerBtn">Register</button>
+        <a href="../pages/login.html" class="login-link" title="Login"
+          >Go to Login</a
+        >
+      </form>
+      <p id="message"></p>
+    </div>
+    <script src="../js/authRenderer/registerRenderer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>

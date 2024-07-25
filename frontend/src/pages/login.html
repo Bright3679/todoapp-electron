@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="../style/auth_css/login.css" />
+  </head>
+  <body>
+    <div class="login-container">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <input
+          type="text"
+          id="usernameOremailid"
+          name="usernameOremailid"
+          placeholder="Enter your Username Or Email"
+          autocomplete="off"
+          required
+        />
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          autocomplete="off"
+          required
+        />
+        <label>
+          <input type="checkbox" id="showPassword" /> Show Passwords
+        </label>
+        <button type="button" id="loginBtn">Login</button>
+        <a href="register.html" title="Register" class="register-link"
+          >Click here to Register</a
+        >
+        <a href="#" title="Forgot Password?" id="reset-password"
+          >Forgot Password?</a
+        >
+      </form>
+      <!-- <p id="message"></p> -->
+    </div>
+    <script src="../js/authRenderer/loginRenderer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>

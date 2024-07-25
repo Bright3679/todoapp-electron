@@ -1,0 +1,105 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  /* background-color: #d5f0f3; */
+  background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  /* max-width: 600px */
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+header {
+  padding: 12px 20px; 
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 8px 8px 8px 8px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  padding: 8px 12px;
+  border: 1px solid #4CAF50;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  display: inline-block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+header h1:hover {
+  transform: translateX(-10px) scale(1.05);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+
+#task-list {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  padding: 10px;
+  /* border-top: 1px solid #e0e0e0; */
+}
+
+#task-list li {
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+footer button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+  box-shadow: 0  4px 10px rgba(0, 0, 0, 0.2);
+}
+
+footer button:hover {
+  background-color: #218838;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+#Download {
+  background-color: #2196F3;
+}
+
+#Download:hover {
+  background-color: #0D47A1;
+}
