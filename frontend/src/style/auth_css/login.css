@@ -19,13 +19,28 @@ body {
     max-width: 100%;
     box-sizing: border-box;
   }
-  
+
+  /* h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    padding: 8px 12px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+   */
   h2 {
     text-align: center;
     margin-bottom: 20px;
     color: #333;
   }
-  
+
   input[type="text"],
   input[type="password"] {
     width: 100%;
@@ -45,7 +60,7 @@ body {
     margin: 5px 0;
   }
   
-  button {
+  #loginBtn {
     width: 100%;
     padding: 10px;
     border: none;
@@ -55,24 +70,36 @@ body {
     cursor: pointer;
     margin: 10px 0;
   }
+
   
   #loginBtn {
     background-color: #007bff; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
 
-  
-  .register-link,
-  #reset-password {
-    display: block;
-    text-align: center;
-    margin: 10px 0;
-    color: #007bff;
+  #register-link{
     text-decoration: none;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  #register-link:hover{
+    text-decoration: underline;
   }
   
-  .register-link:hover,
-  #reset-password:hover {
+  #reset-password {
+    text-decoration: none;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 40px;
+  }
+
+  #reset-password:hover{
     text-decoration: underline;
   }
   

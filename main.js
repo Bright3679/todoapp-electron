@@ -11,14 +11,16 @@ function createWindow() {
             preload: path.join(__dirname, 'frontend/src/js/preload.js'),
             nodeIntegration: true,
             contextIsolation: true,
-            devTools: true,
-            allowRunningInsecureContent: true
+            devTools: false,
+            allowRunningInsecureContent: false
         },
         center: true,
         icon: appIcon
     });
 
     mainWindow.loadFile(path.join(__dirname, '/frontend/src/pages/login.html'));
+    mainWindow.setMenuBarVisibility(false);
+
 }
 
 app.whenReady().then(() => {

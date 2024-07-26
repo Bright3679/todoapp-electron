@@ -9,7 +9,7 @@
 
   <body>
     <div class="login-container">
-      <h2>Register</h2>
+      <!-- <h2>Register here!</h2> -->
       <form id="loginForm">
         <input
           type="text"
@@ -47,13 +47,22 @@
           <input type="checkbox" id="showPassword" /> Show Passwords
         </label>
         <button type="button" id="registerBtn">Register</button>
-        <a href="../pages/login.html" class="login-link" title="Login"
-          >Go to Login</a
-        >
+        <button type="button" id="login-link" title="Login">
+          Go to Login?
+        </button>
       </form>
       <p id="message"></p>
     </div>
     <script src="../js/authRenderer/registerRenderer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const login = document.getElementById("login-link");
+
+        login.addEventListener("click", function () {
+          window.location.href = "../pages/login.html";
+        });
+      });
+    </script>
   </body>
 </html>

@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <link rel="stylesheet" href="../style/auth_css/login.css" />
+    <link rel="stylesheet" href="../pages/register.html" />
   </head>
   <body>
     <div class="login-container">
-      <h2>Login</h2>
+      <!-- <h2>Login here!</h2> -->
       <form id="loginForm">
         <input
           type="text"
@@ -30,16 +31,29 @@
           <input type="checkbox" id="showPassword" /> Show Passwords
         </label>
         <button type="button" id="loginBtn">Login</button>
-        <a href="register.html" title="Register" class="register-link"
-          >Click here to Register</a
-        >
-        <a href="#" title="Forgot Password?" id="reset-password"
-          >Forgot Password?</a
-        >
+        <button type="button" title="Register" id="register-link">
+          Click here to Register!
+        </button>
+        <button type="button" title="Forgot Password?" id="reset-password">
+          Forgot Password?
+        </button>
       </form>
       <!-- <p id="message"></p> -->
     </div>
     <script src="../js/authRenderer/loginRenderer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const register = document.getElementById("register-link");
+        const forgotPassword = document.getElementById("reset-password");
+
+        forgotPassword.addEventListener("click", function () {
+          window.location.href = "../pages/ForgotPassword.html";
+        });
+        register.addEventListener("click", function () {
+          window.location.href = "../pages/register.html";
+        });
+      });
+    </script>
   </body>
 </html>

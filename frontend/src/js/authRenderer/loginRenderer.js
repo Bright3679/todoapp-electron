@@ -2,18 +2,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const usernameOremailid = document.getElementById("usernameOremailid");
     const password = document.getElementById("password");
     const showPasswordCheckbox = document.getElementById("showPassword");
-    const resetPassword = document.getElementById('reset-password');
 
     ['copy', 'paste', 'cut'].forEach(event => {
         password.addEventListener(event, function (event) {
             event.preventDefault();
         });
     });
-
-    resetPassword.addEventListener("click", function () {
-        window.location.href = "./../pages/ForgotPassword.html"
-    })
-
 
     showPasswordCheckbox.addEventListener("change", function () {
         const type = showPasswordCheckbox.checked ? "text" : "password";

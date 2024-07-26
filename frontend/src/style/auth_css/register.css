@@ -20,7 +20,22 @@ body {
     text-transform: none;
 
   }
-  
+/*   
+  h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    padding: 8px 12px;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  } */
+
   h2 {
     text-align: center;
     margin-bottom: 20px;
@@ -46,7 +61,7 @@ body {
     margin: 5px 0;
   }
   
-  button {
+  #registerBtn {
     width: 100%;
     padding: 10px;
     border: none;
@@ -62,15 +77,17 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-  .login-link {
-    display: block;
-    text-align: center;
-    margin: 10px 0;
-    color: #007bff;
+  #login-link {
     text-decoration: none;
+    font-size: medium;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 110px;
   }
   
-  .login-link:hover {
+  #login-link:hover {
     text-decoration: underline;
   }
   
