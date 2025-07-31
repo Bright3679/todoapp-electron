@@ -2,10 +2,10 @@ const sql = require('mssql');
 require('dotenv').config({ path: '../../backend/.env' });
 
 const config = {
-    server: process.env.DB_SERVER,
-    database:process.env.DB_DATABASE,
-    user:process.env.DB_USER,
-    password:process.env.DB_PASSWORD,
+    server: process.env.DB_SERVER || "DESKTOP-NBH600P\\SQLEXPRESS",
+    database:process.env.DB_DATABASE || "testdb",
+    user:process.env.DB_USER || "sa",
+    password:process.env.DB_PASSWORD|| "admin",
     port: process.env.DB_PORT,
     options: {
         encrypt: true,
