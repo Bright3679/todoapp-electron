@@ -7,7 +7,7 @@ const databaseConnection = require('./config/dbConfig')
 
 const expressApp = express();
 const http = require('http').createServer(expressApp);
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 databaseConnection.connectToDatabase();
 

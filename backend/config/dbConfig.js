@@ -6,11 +6,11 @@ const config = {
     database:process.env.DB_DATABASE || "testdb",
     user:process.env.DB_USER || "sa",
     password:process.env.DB_PASSWORD|| "admin",
-    port: process.env.DB_PORT || 1433,
     options: {
         encrypt: true,
         trustServerCertificate: true,
-        enableArithAbort: true
+        enableArithAbort: true,
+        port: process.env.DB_PORT || 1433
     }
 };
 
