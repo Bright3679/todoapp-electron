@@ -3,16 +3,17 @@ require('dotenv').config({ path: '../../backend/.env' });
 
 const config = {
     server: process.env.DB_SERVER || "DESKTOP-NBH600P\\SQLEXPRESS",
-    database:process.env.DB_DATABASE || "testdb",
-    user:process.env.DB_USER || "sa",
-    password:process.env.DB_PASSWORD|| "admin",
+    database: process.env.DB_DATABASE || "testdb",
+    user: process.env.DB_USER || "sa",
+    password: process.env.DB_PASSWORD || "admin",
     options: {
         encrypt: true,
         trustServerCertificate: true,
         enableArithAbort: true,
-        port: process.env.DB_PORT || 1433
+        port: parseInt(process.env.DB_PORT || '1433', 10)
     }
 };
+
 
 function connectToDatabase() {
     sql.connect(config).then(connectionPool => {
