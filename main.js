@@ -11,7 +11,7 @@ function createWindow() {
             preload: path.join(__dirname, 'frontend/src/js/preload.js'),
             nodeIntegration: true,
             contextIsolation: true,
-            devTools: false,
+            devTools: true,
             allowRunningInsecureContent: false
         },
         center: true,
