@@ -27,7 +27,15 @@ const taskSchema = new mongoose.Schema({
     taskID: { type: String, default: uuidv4, unique: true },
     taskName: { type: String, required: true },
     topicID: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now }
+    priority: { 
+        type: String, 
+        enum: ['low', 'medium', 'high'], 
+        default: 'medium' 
+    },
+    remark: { type: String, default: '' },
+    completed: { type: Boolean, default: false },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
 });
 
 
@@ -35,8 +43,12 @@ const topicSchema = new mongoose.Schema({
     topicID: { type: String, default: uuidv4, unique: true },
     topicName: { type: String, required: true },
     personID: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now }
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
 });
+
+topicSchema.index({ personID: 1 });
+topicSchema.index({ createdAt: -1 });
 
 const User = mongoose.model('User', userSchema);
 const Task = mongoose.model('Task', taskSchema);
