@@ -19,7 +19,6 @@ exports.taskInsert = async (req, res) => {
             topicID: topicId,
             priority,
             remark,
-            completed: false
         });
 
         await newTask.save();

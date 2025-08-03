@@ -5,7 +5,6 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  /* background-color: #d5f0f3; */
   background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
 }
 
@@ -32,6 +31,7 @@ header {
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
 header h1 {
@@ -46,6 +46,7 @@ header h1 {
   text-align: center;
   display: inline-block;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 header h1:hover {
@@ -86,6 +87,7 @@ header h1:hover {
   text-align: center;
   display: inline-block;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 #about:hover {
@@ -210,8 +212,7 @@ footer {
   margin-top: 0;
   position: relative;
   padding: 20px;
-  /* box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
-  border-radius: 4px; */
+
 }
 
 footer button {
@@ -278,7 +279,7 @@ footer p {
 @media (max-width: 600px) {
   .todo-container {
     padding: 10px;
-    height: 90vh; /* Adjusted height for mobile view */
+    height: 90vh;
   }
 
   form {

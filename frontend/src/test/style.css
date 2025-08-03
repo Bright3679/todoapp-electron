@@ -1,0 +1,263 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+  }
+  
+  .todo-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  header {
+    background-color: #4CAF50;
+    padding: 0.5px 20px;
+    border-radius: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  header h1 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    padding: 8px 12px;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: inline-block;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  header h1:hover,
+  #user-name:hover,
+  #about:hover {
+    transform: translateX(-10px) scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  #user-name,
+  #about {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    padding: 8px 12px;
+    border: 1px solid #4CAF50;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: inline-block;
+    text-transform: uppercase;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  form {
+    display: flex;
+    margin: 20px 0;
+    gap: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+  
+  form input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    font-size: 14px;
+    border: 2px solid #4CAF50;
+    border-radius: 4px;
+    outline: none;
+  }
+  
+  form button {
+    padding: 10px 15px;
+    font-size: 14px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  form button:hover {
+    background-color: #45a049;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .todo-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 5px;
+  }
+  
+  .todo-item {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    background-color: #fff;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .todo-item:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .todo-item:hover {
+    background-color: #e6f7ff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .task-number {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .task-text {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  
+  .task-remark,
+  .task-reminder,
+  .task-priority {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 4px;
+  }
+  
+  .task-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+  
+  .complete-btn,
+  .edit-btn,
+  .delete-btn,
+  .remark-btn,
+  .reminder-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .complete-btn { background-color: #28a745; }
+  .edit-btn { background-color: #007bff; }
+  .delete-btn { background-color: #dc3545; }
+  .remark-btn { background-color: #ff9800; }
+  .reminder-btn { background-color: #9c27b0; }
+  
+  .complete-btn:hover { background-color: #218838; }
+  .edit-btn:hover { background-color: #1e88e5; }
+  .delete-btn:hover { background-color: #e53935; }
+  .remark-btn:hover { background-color: #fb8c00; }
+  .reminder-btn:hover { background-color: #7b1fa2; }
+  
+  .priority-select {
+    font-size: 12px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .completed .task-text {
+    text-decoration: line-through;
+    color: #888;
+  }
+  
+  footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    position: relative;
+  }
+  
+  footer p {
+    font-size: 14px;
+    color: #666;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: calc(100% - 20px);
+    padding-left: 20px;
+    box-sizing: border-box;
+  }
+  
+  footer button {
+    padding: 8px 15px;
+    font-size: 14px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  footer button:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  #show-button { background-color: #2196F3; }
+  #logout-btn { background-color: #F44336; }
+  #clear-all-btn { background-color: #28a745; }
+  
+  #show-button:hover { background-color: #0D47A1; }
+  #logout-btn:hover { background-color: #E53935; }
+  #clear-all-btn:hover { background-color: #218838; }
+  
+  @media (max-width: 600px) {
+    .todo-container {
+      padding: 10px;
+      height: 90vh;
+    }
+  
+    form {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    form input[type="text"],
+    form button,
+    .task-actions button,
+    .priority-select {
+      width: 100%;
+    }
+  
+    .task-actions {
+      flex-direction: column;
+    }
+  }
+  

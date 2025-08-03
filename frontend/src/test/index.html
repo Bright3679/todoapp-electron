@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List App</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+    <div class="todo-container">
+      <header>
+        <h1 id="todo">Todo List</h1>
+        <p id="user-name"></p>
+        <p id="about">About</p>
+      </header>
+      <form id="todo-form">
+        <input type="text" id="todo-input" placeholder="Add a new task" />
+        <button type="submit">Add Task</button>
+      </form>
+      <div class="todo-list" id="todo-list"></div>
+      <footer>
+        <p id="subject">Todo List for:</p>
+        <button type="button" id="show-button">Show your Todo-List</button>
+        <button type="button" id="logout-btn">Logout</button>
+        <button type="button" id="clear-all-btn">Clear All</button>
+      </footer>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginName = document.getElementById("user-name");
+        const about = document.getElementById("about");
+        const subject = document.getElementById("subject");
+        const todo = document.getElementById("todo");
+        const todoList = document.getElementById("todo-list");
+
+        const token = localStorage.getItem("token");
+        const taskToken = localStorage.getItem("taskToken");
+        const taskTopic = localStorage.getItem("taskTopic");
+
+        subject.textContent = `Todo List for : ${taskTopic}`;
+
+        about.addEventListener("click", function () {
+          Swal.fire({
+            title: "About",
+            html: `
+              <p>This application helps you manage your tasks efficiently.
+              You can add, edit, complete, and delete tasks to stay organized.</p>
+              <p>Developed by: Ujjwal Soni</p>
+              <p>Version: 1.0.0</p>
+              <p>GitHub: <a href="https://github.com/Bright3679/electron-app" target="_blank">GitHub Repo</a></p>
+            `,
+            icon: "info",
+            backdrop: false,
+            confirmButtonText: "Close",
+          });
+        });
+
+        todo.addEventListener("click", function () {
+          Swal.fire({
+            text: "Create a new List?",
+            icon: "question",
+            backdrop: false,
+            showCancelButton: true,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = "./frontend/src/pages/createTask.html";
+            }
+          });
+        });
+
+        function logout() {
+          localStorage.removeItem("token");
+          localStorage.removeItem("taskToken");
+          window.location.href = "./frontend/src/pages/login.html";
+        }
+
+        function checkTokenExpiration() {
+          try {
+            if (!token || !taskToken) {
+              logout();
+              return;
+            }
+            const tokenPayload = JSON.parse(atob(token.split(".")[1]));
+            const taskTokenPayload = JSON.parse(atob(taskToken.split(".")[1]));
+
+            const tokenExpiration = tokenPayload.exp * 1000;
+            const taskTokenExpiration = taskTokenPayload.exp * 1000;
+
+            if (Date.now() >= tokenExpiration || Date.now() >= taskTokenExpiration) {
+              alert("Your Session has expired!");
+              logout();
+            } else {
+              loginName.textContent = `Welcome, ${tokenPayload.name}!`;
+            }
+          } catch (error) {
+            console.error("Error decoding token:", error);
+            alert("You are being logged out for security reasons.");
+            logout();
+          }
+        }
+
+        function loadTasks() {
+          fetch("/api/", {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+            .then((res) => res.json())
+            .then((data) => renderTasks(data.tasks))
+            .catch((err) => console.error(err));
+        }
+
+        function renderTasks(tasks) {
+          todoList.innerHTML = "";
+          tasks.forEach((task, index) => {
+            const item = document.createElement("div");
+            item.className = `todo-item ${task.completed ? "completed" : ""}`;
+            item.innerHTML = `
+              <div class="task-number">${index + 1}.</div>
+              <div class="task-text">${task.task}</div>
+              <div class="task-remark">Remark: <span class="remark-text">${task.remark || "None"}</span></div>
+              <div class="task-reminder">Reminder: <span class="reminder-text">${task.reminder ? new Date(task.reminder).toLocaleString() : "None"}</span></div>
+              <div class="task-priority">Priority: <span class="priority-text">${task.priority || "medium"}</span></div>
+              <div class="task-actions">
+                <button class="complete-btn">✓</button>
+                <button class="edit-btn">✎</button>
+                <button class="delete-btn">🗑</button>
+                <button class="remark-btn">Remark</button>
+                <button class="reminder-btn">Reminder</button>
+                <select class="priority-select">
+                  <option value="low" ${task.priority === "low" ? "selected" : ""}>Low</option>
+                  <option value="medium" ${task.priority === "medium" ? "selected" : ""}>Medium</option>
+                  <option value="high" ${task.priority === "high" ? "selected" : ""}>High</option>
+                </select>
+              </div>
+            `;
+
+            const [completeBtn, editBtn, deleteBtn, remarkBtn, reminderBtn, prioritySelect] = item.querySelectorAll("button, select");
+
+            completeBtn.onclick = () => {
+              fetch(`/api/toggle/${task._id}`, {
+                method: "PATCH",
+                headers: { Authorization: `Bearer ${token}` },
+              }).then(() => loadTasks());
+            };
+
+            deleteBtn.onclick = () => {
+              fetch(`/api/delete/${task._id}`, {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
+              }).then(() => loadTasks());
+            };
+
+            remarkBtn.onclick = () => {
+              Swal.fire({
+                title: "Add Remark",
+                input: "text",
+                inputValue: task.remark || "",
+                showCancelButton: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  fetch(`/api/updateremark/${task._id}`, {
+                    method: "PATCH",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ remark: result.value }),
+                  }).then(() => loadTasks());
+                }
+              });
+            };
+
+            reminderBtn.onclick = () => {
+              Swal.fire({
+                title: "Set Reminder",
+                input: "datetime-local",
+                showCancelButton: true,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  fetch(`/api/updatetask/${task._id}`, {
+                    method: "PUT",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${token}`,
+                    },
+                    body: JSON.stringify({ reminder: result.value }),
+                  }).then(() => loadTasks());
+                }
+              });
+            };
+
+            prioritySelect.onchange = () => {
+              fetch(`/api/updatetask/${task._id}`, {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({ priority: prioritySelect.value }),
+              }).then(() => loadTasks());
+            };
+
+            todoList.appendChild(item);
+          });
+        }
+
+        checkTokenExpiration();
+        loadTasks();
+      });
+    </script>
+  </body>
+</html>

@@ -12,14 +12,14 @@ function createWindow() {
             nodeIntegration: true,
             contextIsolation: true,
             devTools: true,
-            allowRunningInsecureContent: false
+            allowRunningInsecureContent: true
         },
         center: true,
         icon: appIcon
     });
 
-    mainWindow.loadFile(path.join(__dirname, '/frontend/src/pages/login.html'));
-    mainWindow.setMenuBarVisibility(false);
+    mainWindow.loadFile(path.join(__dirname, './frontend/src/pages/login.html'));
+    mainWindow.setMenuBarVisibility(true);
 
 }
 

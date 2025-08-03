@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const fetchedTaskNames = new Set();
     if (taskToken) {
         try {
-            const response = await fetch('http://localhost:3000/api/gettasks', {
+            const response = await fetch('http://localhost:3000/api/', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${taskToken}`
