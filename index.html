@@ -111,3 +111,1152 @@
 
 
 
+<!-- 
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo List App</title>
+  <link rel="stylesheet" href="./frontend/src/style/index_css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <div class="todo-container">
+    <header>
+      <h1 id="todo">Todo List</h1>
+      <p id="user-name"></p>
+      <p id="about">About</p>
+    </header>
+
+
+    <form id="todo-form">
+      <input type="text" id="todo-input" placeholder="Add a new task" required />
+
+
+      <select id="priority">
+        <option value="Medium">Priority: Medium</option>
+        <option value="High">High</option>
+        <option value="Low">Low</option>
+      </select>
+
+
+      <input type="text" id="remark" placeholder="Add remark (optional)" />
+
+
+      <input type="datetime-local" id="reminder" />
+
+      <button type="submit">Add Task</button>
+    </form>
+
+
+    <div class="todo-list" id="todo-list"></div>
+
+
+    <footer>
+      <p id="subject">Todo List for:</p>
+      <button type="button" id="show-button">Show your Todo-List</button>
+      <button type="button" id="logout-btn">Logout</button>
+      <button type="button" id="clear-all-btn">Clear All</button>
+    </footer>
+  </div>
+
+  <script src="./frontend/src/js/indexRenderer/index.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const loginName = document.getElementById("user-name");
+      const about = document.getElementById("about");
+      const subject = document.getElementById("subject");
+      const todo = document.getElementById("todo");
+      const taskToken = localStorage.getItem("taskToken");
+      const token = localStorage.getItem("token");
+      const taskTopic = localStorage.getItem("taskTopic");
+
+      about.addEventListener("click", function () {
+        Swal.fire({
+          title: "About",
+          html: `
+            <p>This application helps you manage your tasks efficiently.
+            You can add, edit, complete, and delete tasks to stay organized.</p>
+            <p>Developed by: Ujjwal Soni</p>
+            <p>Version: 1.0.0</p>
+            <p>GitHub: <a href="https://github.com/Bright3679/electron-app" target="_blank">https://github.com/Bright3679/electron-app</a></p>
+          `,
+          icon: "info",
+          backdrop: false,
+          confirmButtonText: "Close",
+        });
+      });
+
+      todo.addEventListener("click", function () {
+        Swal.fire({
+          text: "Create a new List?",
+          icon: "question",
+          backdrop: false,
+          showCancelButton: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "./frontend/src/pages/createTask.html";
+          }
+        });
+      });
+
+      subject.textContent = `Todo List for : ${taskTopic}`;
+
+      function logout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("taskToken");
+        window.location.href = "./frontend/src/pages/login.html";
+      }
+
+      function checkTokenExpiration() {
+        try {
+          if (!token || !taskToken) {
+            logout();
+            return;
+          }
+          const tokenPayload = JSON.parse(atob(token.split(".")[1]));
+          const taskTokenPayload = JSON.parse(atob(taskToken.split(".")[1]));
+
+          const tokenExpiration = tokenPayload.exp * 1000;
+          const taskTokenExpiration = taskTokenPayload.exp * 1000;
+
+          if (Date.now() >= tokenExpiration || Date.now() >= taskTokenExpiration) {
+            alert("Your Session has expired!");
+            logout();
+          } else {
+            loginName.textContent = `Welcome, ${tokenPayload.name}!`;
+          }
+        } catch (error) {
+          console.error("Error decoding token:", error);
+          alert("You are being logged out for security reasons.");
+          logout();
+        }
+      }
+
+      checkTokenExpiration();
+    });
+  </script>
+</body>
+</html>
+ -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo List App</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    /* Reset & Base */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f8fafc;
+      color: #1e293b;
+      line-height: 1.6;
+    }
+
+    /* Container */
+    .todo-container {
+      background-color: white;
+      padding: 2.5rem;
+      border-radius: 1rem;
+      width: 100%;
+      max-width: 720px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1.75rem;
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .app-icon {
+      font-size: 1.5rem;
+      color: #6366f1;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    #user-name,
+    #about {
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: #64748b;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    #user-name:hover,
+    #about:hover {
+      color: #475569;
+    }
+
+    /* Form */
+    .form-container {
+      background-color: #f8fafc;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      margin-bottom: 2rem;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    form label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #475569;
+    }
+
+    form input[type="text"],
+    form input[type="datetime-local"],
+    form select,
+    form textarea {
+      padding: 0.75rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      font-size: 0.9375rem;
+      background: white;
+      transition: all 0.2s ease;
+      width: 100%;
+    }
+
+    form textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    form input[type="text"]:focus,
+    form input[type="datetime-local"]:focus,
+    form select:focus,
+    form textarea:focus {
+      outline: none;
+      border-color: #818cf8;
+      box-shadow: 0 0 0 3px rgba(129, 140, 248, 0.1);
+    }
+
+    .form-actions {
+      grid-column: span 2;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    form button {
+      padding: 0.75rem 1.5rem;
+      background-color: #6366f1;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    form button:hover {
+      background-color: #4f46e5;
+      transform: translateY(-1px);
+    }
+
+    form button.secondary {
+      background-color: white;
+      color: #64748b;
+      border: 1px solid #e2e8f0;
+    }
+
+    form button.secondary:hover {
+      background-color: #f8fafc;
+    }
+
+    /* Todo List */
+    .todo-list {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* List Controls */
+    .list-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .search-filter {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .search-box {
+      position: relative;
+      width: 240px;
+    }
+
+    .search-box input {
+      padding: 0.5rem 0.75rem 0.5rem 2rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      width: 100%;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+    }
+
+    .filter-select {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      background: white;
+    }
+
+    .stats {
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    /* Scrollbar */
+    .todo-list::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .todo-list::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 4px;
+    }
+
+    .todo-list::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+
+    /* Todo Item */
+    .todo-item {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    }
+
+    .todo-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      border-color: #c7d2fe;
+    }
+
+    .todo-item.completed {
+      background-color: #f8fafc;
+      opacity: 0.8;
+    }
+
+    .todo-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .task-number {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-bottom: 0.25rem;
+    }
+
+    .task-text {
+      font-size: 1.0625rem;
+      margin-bottom: 1rem;
+      color: #334155;
+      font-weight: 500;
+    }
+
+    .task-text.completed {
+      text-decoration: line-through;
+      color: #94a3b8;
+    }
+
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8125rem;
+      color: #64748b;
+    }
+
+    .meta-item i {
+      color: #94a3b8;
+    }
+
+    /* Priority Styling */
+    .priority {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: white;
+    }
+
+    .priority[data-priority="High"] {
+      background-color: #ef4444;
+    }
+
+    .priority[data-priority="Medium"] {
+      background-color: #f59e0b;
+    }
+
+    .priority[data-priority="Low"] {
+      background-color: #10b981;
+    }
+
+    /* Task Actions */
+    .task-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .task-actions button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .task-actions button:hover {
+      transform: translateY(-1px);
+    }
+
+    .complete-btn {
+      background-color: #10b981;
+      color: white;
+    }
+
+    .edit-btn {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    .delete-btn {
+      background-color: #ef4444;
+      color: white;
+    }
+
+    .reminder-btn {
+      background-color: #8b5cf6;
+      color: white;
+    }
+
+    /* Footer */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1.75rem;
+      margin-top: 1.75rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    footer p {
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    .footer-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    footer button {
+      padding: 0.625rem 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    footer button:hover {
+      transform: translateY(-1px);
+    }
+
+    #show-button {
+      background-color: #6366f1;
+    }
+
+    #logout-btn {
+      background-color: #64748b;
+    }
+
+    #clear-all-btn {
+      background-color: #ef4444;
+    }
+
+    #export-btn {
+      background-color: #10b981;
+    }
+
+    /* Empty State */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 0;
+      color: #94a3b8;
+    }
+
+    .empty-state i {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #cbd5e1;
+    }
+
+    .empty-state p {
+      max-width: 300px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .todo-container {
+        padding: 1.5rem;
+        height: auto;
+        max-height: none;
+      }
+
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full-width {
+        grid-column: span 1;
+      }
+
+      .form-actions {
+        grid-column: span 1;
+      }
+
+      .list-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .search-filter {
+        width: 100%;
+        flex-direction: column;
+      }
+
+      .search-box {
+        width: 100%;
+      }
+
+      .task-actions {
+        flex-wrap: wrap;
+      }
+
+      .task-actions button {
+        flex: 1;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .footer-actions {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      .footer-actions button {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="todo-container">
+    <header>
+      <div class="header-left">
+        <i class="fas fa-tasks app-icon"></i>
+        <h1 id="todo">Todo List</h1>
+      </div>
+      <div class="header-right">
+        <p id="user-name"><i class="fas fa-user"></i> <span id="username-text"></span></p>
+        <p id="about"><i class="fas fa-info-circle"></i> About</p>
+      </div>
+    </header>
+
+    <div class="form-container">
+      <form id="todo-form">
+        <div class="form-group full-width">
+          <label for="todo-input">Task Description</label>
+          <input type="text" id="todo-input" placeholder="What needs to be done?" required />
+        </div>
+
+        <div class="form-group">
+          <label for="priority">Priority</label>
+          <select id="priority">
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category">
+            <option value="Personal">Personal</option>
+            <option value="Work">Work</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="reminder">Reminder</label>
+          <input type="datetime-local" id="reminder" />
+        </div>
+
+        <div class="form-group full-width">
+          <label for="remark">Notes</label>
+          <textarea id="remark" placeholder="Additional details..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="reset" class="secondary">
+            <i class="fas fa-undo"></i> Clear
+          </button>
+          <button type="submit">
+            <i class="fas fa-plus"></i> Add Task
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="list-controls">
+      <div class="search-filter">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="search-input" placeholder="Search tasks..." />
+        </div>
+        <select class="filter-select" id="filter-select">
+          <option value="all">All Tasks</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+          <option value="high">High Priority</option>
+        </select>
+      </div>
+      <div class="stats" id="stats">
+        0 tasks • 0 completed
+      </div>
+    </div>
+
+    <div class="todo-list" id="todo-list">
+      <div class="empty-state">
+        <i class="fas fa-clipboard-list"></i>
+        <h3>No tasks yet</h3>
+        <p>Add your first task using the form above to get started</p>
+      </div>
+    </div>
+
+    <footer>
+      <p id="subject">Todo List for: <span id="task-topic"></span></p>
+      <div class="footer-actions">
+        <button type="button" id="export-btn">
+          <i class="fas fa-file-export"></i> Export
+        </button>
+        <button type="button" id="show-button">
+          <i class="fas fa-list"></i> Show All
+        </button>
+        <button type="button" id="clear-all-btn">
+          <i class="fas fa-trash"></i> Clear All
+        </button>
+        <button type="button" id="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const loginName = document.getElementById("username-text");
+      const about = document.getElementById("about");
+      const subject = document.getElementById("task-topic");
+      const todo = document.getElementById("todo");
+      const taskToken = localStorage.getItem("taskToken");
+      const token = localStorage.getItem("token");
+      const taskTopic = localStorage.getItem("taskTopic");
+
+      // Initialize task counter
+      let taskCounter = 1;
+      let tasks = [];
+
+      // Form submission
+      document.getElementById("todo-form").addEventListener("submit", function(e) {
+        e.preventDefault();
+        
+        const taskInput = document.getElementById("todo-input");
+        const priority = document.getElementById("priority").value;
+        const category = document.getElementById("category").value;
+        const remark = document.getElementById("remark").value;
+        const reminder = document.getElementById("reminder").value;
+        
+        if (taskInput.value.trim() === "") return;
+        
+        const newTask = {
+          id: Date.now(),
+          number: taskCounter++,
+          text: taskInput.value,
+          priority: priority,
+          category: category,
+          remark: remark,
+          reminder: reminder,
+          completed: false,
+          createdAt: new Date().toISOString()
+        };
+        
+        tasks.push(newTask);
+        renderTasks();
+        updateStats();
+        taskInput.value = "";
+        document.getElementById("remark").value = "";
+        
+        // Show success notification
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Task added',
+          showConfirmButton: false,
+          timer: 1500,
+          toast: true,
+          background: '#f8fafc'
+        });
+      });
+
+      // Render tasks
+      function renderTasks(filteredTasks = null) {
+        const todoList = document.getElementById("todo-list");
+        const tasksToRender = filteredTasks || tasks;
+        
+        if (tasksToRender.length === 0) {
+          todoList.innerHTML = `
+            <div class="empty-state">
+              <i class="fas fa-clipboard-list"></i>
+              <h3>No tasks found</h3>
+              <p>Try adjusting your search or filter criteria</p>
+            </div>
+          `;
+          return;
+        }
+        
+        todoList.innerHTML = '';
+        
+        tasksToRender.forEach(task => {
+          const taskElement = document.createElement('div');
+          taskElement.className = `todo-item ${task.completed ? 'completed' : ''}`;
+          taskElement.innerHTML = `
+            <div class="todo-header">
+              <div>
+                <div class="task-number">Task #${task.number}</div>
+                <div class="task-text ${task.completed ? 'completed' : ''}">${task.text}</div>
+              </div>
+              <div class="priority" data-priority="${task.priority}">
+                <i class="fas fa-${task.priority === 'High' ? 'exclamation' : task.priority === 'Medium' ? 'minus' : 'arrow-down'}"></i>
+                ${task.priority}
+              </div>
+            </div>
+            
+            <div class="task-meta">
+              <div class="meta-item">
+                <i class="fas fa-tag"></i>
+                ${task.category}
+              </div>
+              ${task.reminder ? `
+                <div class="meta-item">
+                  <i class="fas fa-bell"></i>
+                  ${new Date(task.reminder).toLocaleString()}
+                </div>
+              ` : ''}
+              <div class="meta-item">
+                <i class="fas fa-calendar"></i>
+                ${new Date(task.createdAt).toLocaleDateString()}
+              </div>
+            </div>
+            
+            ${task.remark ? `
+              <div class="task-notes">
+                <div class="meta-item">
+                  <i class="fas fa-sticky-note"></i>
+                  ${task.remark}
+                </div>
+              </div>
+            ` : ''}
+            
+            <div class="task-actions">
+              <button class="complete-btn" data-id="${task.id}">
+                <i class="fas fa-check"></i> ${task.completed ? 'Undo' : 'Complete'}
+              </button>
+              <button class="edit-btn" data-id="${task.id}">
+                <i class="fas fa-edit"></i> Edit
+              </button>
+              ${task.reminder ? `
+                <button class="reminder-btn" data-id="${task.id}">
+                  <i class="fas fa-bell"></i> Remind
+                </button>
+              ` : ''}
+              <button class="delete-btn" data-id="${task.id}">
+                <i class="fas fa-trash"></i> Delete
+              </button>
+            </div>
+          `;
+          
+          todoList.appendChild(taskElement);
+        });
+      }
+
+      // Update stats
+      function updateStats() {
+        const totalTasks = tasks.length;
+        const completedTasks = tasks.filter(task => task.completed).length;
+        document.getElementById("stats").textContent = 
+          `${totalTasks} ${totalTasks === 1 ? 'task' : 'tasks'} • ${completedTasks} completed`;
+      }
+
+      // Event delegation for task actions
+      document.getElementById("todo-list").addEventListener("click", function(e) {
+        const target = e.target.closest('button');
+        if (!target) return;
+        
+        const taskId = parseInt(target.dataset.id);
+        const taskIndex = tasks.findIndex(task => task.id === taskId);
+        
+        if (taskIndex === -1) return;
+        
+        if (target.classList.contains('complete-btn')) {
+          tasks[taskIndex].completed = !tasks[taskIndex].completed;
+          renderTasks();
+          updateStats();
+        } 
+        else if (target.classList.contains('delete-btn')) {
+          Swal.fire({
+            title: 'Delete Task?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#ef4444',
+            cancelButtonColor: '#64748b',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              tasks.splice(taskIndex, 1);
+              renderTasks();
+              updateStats();
+              Swal.fire(
+                'Deleted!',
+                'Your task has been deleted.',
+                'success'
+              );
+            }
+          });
+        }
+        else if (target.classList.contains('edit-btn')) {
+          // Edit functionality would go here
+          Swal.fire({
+            title: 'Edit Task',
+            html: `Edit functionality would be implemented here`,
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#6366f1'
+          });
+        }
+        else if (target.classList.contains('reminder-btn')) {
+          // Reminder functionality would go here
+          Swal.fire({
+            title: 'Set Reminder',
+            html: `Reminder functionality would be implemented here`,
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#6366f1'
+          });
+        }
+      });
+
+      // Search functionality
+      document.getElementById("search-input").addEventListener("input", function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const filteredTasks = tasks.filter(task => 
+          task.text.toLowerCase().includes(searchTerm) || 
+          (task.remark && task.remark.toLowerCase().includes(searchTerm))
+      );
+        renderTasks(filteredTasks);
+      });
+
+      // Filter functionality
+      document.getElementById("filter-select").addEventListener("change", function(e) {
+        const filterValue = e.target.value;
+        let filteredTasks = [];
+        
+        switch(filterValue) {
+          case 'completed':
+            filteredTasks = tasks.filter(task => task.completed);
+            break;
+          case 'pending':
+            filteredTasks = tasks.filter(task => !task.completed);
+            break;
+          case 'high':
+            filteredTasks = tasks.filter(task => task.priority === 'High');
+            break;
+          default:
+            filteredTasks = tasks;
+        }
+        
+        renderTasks(filteredTasks);
+      });
+
+      // Clear all tasks
+      document.getElementById("clear-all-btn").addEventListener("click", function() {
+        if (tasks.length === 0) return;
+        
+        Swal.fire({
+          title: 'Clear All Tasks?',
+          text: "This will remove all your tasks permanently!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#ef4444',
+          cancelButtonColor: '#64748b',
+          confirmButtonText: 'Yes, clear all!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            tasks = [];
+            taskCounter = 1;
+            renderTasks();
+            updateStats();
+            Swal.fire(
+              'Cleared!',
+              'All tasks have been removed.',
+              'success'
+            );
+          }
+        });
+      });
+
+      // Export functionality
+      document.getElementById("export-btn").addEventListener("click", function() {
+        if (tasks.length === 0) {
+          Swal.fire({
+            icon: 'info',
+            title: 'No tasks to export',
+            text: 'Your todo list is empty',
+            confirmButtonColor: '#6366f1'
+          });
+          return;
+        }
+        
+        // In a real app, this would export to CSV or JSON
+        Swal.fire({
+          title: 'Export Tasks',
+          html: `Export functionality would be implemented here<br><br>
+                Options would include:<br>
+                - CSV Export<br>
+                - JSON Export<br>
+                - Print List`,
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#6366f1'
+        });
+      });
+
+      // About dialog
+      about.addEventListener("click", function () {
+        Swal.fire({
+          title: 'About Todo App',
+          html: `
+            <div style="text-align: left; line-height: 1.8;">
+              <p style="margin-bottom: 1rem;">A beautiful, feature-rich todo application to help you stay organized and productive.</p>
+              
+              <div style="background: #f8fafc; padding: 1rem; border-radius: 0.5rem; margin: 1rem 0;">
+                <h4 style="margin-bottom: 0.5rem; color: #334155;">Features:</h4>
+                <ul style="padding-left: 1.25rem;">
+                  <li>Task prioritization</li>
+                  <li>Categories and tags</li>
+                  <li>Reminders and due dates</li>
+                  <li>Detailed notes</li>
+                  <li>Search and filtering</li>
+                  <li>Export capabilities</li>
+                </ul>
+              </div>
+              
+              <p><strong>Version:</strong> 2.0.0</p>
+              <p><strong>Developer:</strong> Ujjwal Soni</p>
+              <p><strong>GitHub:</strong> <a href="https://github.com/Bright3679/electron-app" target="_blank" style="color: #6366f1; text-decoration: none;">github.com/Bright3679</a></p>
+            </div>
+          `,
+          icon: "info",
+          backdrop: false,
+          confirmButtonText: "Close",
+          confirmButtonColor: "#6366f1",
+          width: '500px'
+        });
+      });
+
+      // Create new list
+      todo.addEventListener("click", function () {
+        Swal.fire({
+          title: 'Create New List',
+          text: "This will create a fresh todo list. Current tasks will be saved.",
+          icon: "question",
+          backdrop: false,
+          showCancelButton: true,
+          confirmButtonText: "Create",
+          confirmButtonColor: "#6366f1",
+          cancelButtonColor: "#64748b",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "./frontend/src/pages/createTask.html";
+          }
+        });
+      });
+
+      // Set initial data
+      subject.textContent = taskTopic || "General Tasks";
+
+      function logout() {
+        localStorage.removeItem("token");
+        localStorage.removeItem("taskToken");
+        window.location.href = "./frontend/src/pages/login.html";
+      }
+
+      function checkTokenExpiration() {
+        try {
+          if (!token || !taskToken) {
+            logout();
+            return;
+          }
+          const tokenPayload = JSON.parse(atob(token.split(".")[1]));
+          const taskTokenPayload = JSON.parse(atob(taskToken.split(".")[1]));
+
+          const tokenExpiration = tokenPayload.exp * 1000;
+          const taskTokenExpiration = taskTokenPayload.exp * 1000;
+
+          if (Date.now() >= tokenExpiration || Date.now() >= taskTokenExpiration) {
+            Swal.fire({
+              title: "Session Expired",
+              text: "Your session has expired. Please login again.",
+              icon: "warning",
+              confirmButtonColor: "#6366f1",
+            }).then(() => {
+              logout();
+            });
+          } else {
+            loginName.textContent = tokenPayload.name;
+          }
+        } catch (error) {
+          console.error("Error decoding token:", error);
+          Swal.fire({
+            title: "Security Alert",
+            text: "You are being logged out for security reasons.",
+            icon: "error",
+            confirmButtonColor: "#6366f1",
+          }).then(() => {
+            logout();
+          });
+        }
+      }
+
+      checkTokenExpiration();
+    });
+  </script>
+</body>
+</html> -->
