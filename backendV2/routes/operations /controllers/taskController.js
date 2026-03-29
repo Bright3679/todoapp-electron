@@ -34,8 +34,8 @@ exports.gettasks = async (req, res) => {
 
     try {
         const tasks = await Task.find({ topicID }).sort({ 
-            priority: -1, // High priority first
-            createdAt: -1 // Newest first
+            priority: -1,
+            createdAt: -1 
         });
 
         if (tasks.length === 0) {

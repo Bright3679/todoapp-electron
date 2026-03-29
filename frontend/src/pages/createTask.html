@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -29,4 +29,226 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </body>
 </html>
+ -->
 
+<!-- 
+ <!DOCTYPE html>
+ <html lang="en">
+   <head>
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+     <title>Task Manager | Create Topics</title>
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" />
+     <link rel="stylesheet" href="../style/temp.css" />
+   </head>
+   <body>
+     <div class="app-container">
+       <header class="app-header">
+         <h1>Task Manager</h1>
+         <div class="user-controls">
+           <button class="icon-button">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+               <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+             </svg>
+           </button>
+           <div class="user-avatar">
+             <span>JD</span>
+           </div>
+         </div>
+       </header>
+       
+       <main class="content-area">
+         <div class="card create-task-card">
+           <div class="card-header">
+             <h2>Create New Topic</h2>
+             <div class="card-actions">
+               <button class="icon-button small">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <circle cx="12" cy="12" r="1"></circle>
+                   <circle cx="12" cy="5" r="1"></circle>
+                   <circle cx="12" cy="19" r="1"></circle>
+                 </svg>
+               </button>
+             </div>
+           </div>
+           <div class="card-body">
+             <form id="taskForm" class="task-form">
+               <div class="form-group">
+                 <label for="taskTopic">Topic Name</label>
+                 <input
+                   type="text"
+                   id="taskTopic"
+                   placeholder="Enter topic name"
+                   required
+                   class="form-input"
+                 />
+                 <p class="input-hint">Enter a descriptive name for your topic</p>
+               </div>
+               <button type="button" id="topicBtn" class="primary-button">
+                 <span>Create Topic</span>
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <line x1="12" y1="5" x2="12" y2="19"></line>
+                   <line x1="5" y1="12" x2="19" y2="12"></line>
+                 </svg>
+               </button>
+             </form>
+           </div>
+         </div>
+         
+         <div class="card topics-list-card">
+           <div class="card-header">
+             <h2>Your Topics</h2>
+             <div class="card-actions">
+               <div class="search-box">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <circle cx="11" cy="11" r="8"></circle>
+                   <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                 </svg>
+                 <input type="text" placeholder="Search topics..." />
+               </div>
+               <button class="icon-button small">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                   <path d="M3 6h18"></path>
+                   <path d="M7 12h10"></path>
+                   <path d="M10 18h4"></path>
+                 </svg>
+               </button>
+             </div>
+           </div>
+           <div class="card-body">
+             <div class="topics-list-container">
+               <ul id="topics" class="topics-list">
+                 <li class="empty-state">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                     <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                     <polyline points="14 2 14 8 20 8"></polyline>
+                     <line x1="16" y1="13" x2="8" y2="13"></line>
+                     <line x1="16" y1="17" x2="8" y2="17"></line>
+                     <polyline points="10 9 9 9 8 9"></polyline>
+                   </svg>
+                   <h3>No topics yet</h3>
+                   <p>Create your first topic to get started</p>
+                 </li>
+               </ul>
+             </div>
+           </div>
+         </div>
+       </main>
+     </div>
+     <script src="../js/createTask.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   </body>
+ </html> -->
+
+
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager | Create Topics</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+    />
+    <link rel="stylesheet" href="../style/temp.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <header class="app-header">
+        <h1>Task Manager</h1>
+        <div class="user-controls">
+          <button class="icon-button" title="Notifications">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </button>
+          <div class="user-avatar">
+            <span>JD</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="content-area">
+        <!-- Create Topic Card -->
+        <div class="card create-task-card">
+          <div class="card-header">
+            <h2>Create New Topic</h2>
+          </div>
+          <div class="card-body">
+            <form id="taskForm" class="task-form">
+              <div class="form-group">
+                <label for="taskTopic">Topic Name</label>
+                <input
+                  type="text"
+                  id="taskTopic"
+                  placeholder="Enter topic name"
+                  required
+                  class="form-input"
+                />
+                <p class="input-hint">Enter a descriptive name for your topic</p>
+              </div>
+              <button type="button" id="topicBtn" class="primary-button">
+                <span>Create Topic</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Topics List Card -->
+        <div class="card topics-list-card">
+          <div class="card-header">
+            <h2>Your Topics</h2>
+            <div class="card-actions">
+              <div class="search-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input id="searchBox" type="text" placeholder="Search topics..." />
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="topics-list-container">
+              <ul id="topics" class="topics-list">
+                <li class="empty-state">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                    <polyline points="10 9 9 9 8 9"></polyline>
+                  </svg>
+                  <h3>No topics yet</h3>
+                  <p>Create your first topic to get started</p>
+                  <button onclick="document.getElementById('taskTopic').focus()">+ Create Topic</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script src="../js/createTask.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </body>
+</html>
